@@ -1,36 +1,65 @@
 <?php
-$Food = 'Hinata Roll';
-$stock = 120;
-$purchased = 15;
-$deal = true;
+include "header.php";
 
-$buy = (($purchased <= $stock) && ($deal == true));
+echo '<link rel="stylesheet" href="css/styles.css">';
 
-$addString = 1 + "2";
-$addMixed = intval("Rolls") + 3;
-$concat = "Spike " . true;
+$food1 = "Hinata Rolls";
+$food2 = "Kageyama Rice";
+$food3 = "Tsukishima Tea";
+$food4 = "Nishinoya Ramen";
+
+$foods = [$food1, $food2, $food3, $food4];
+
+echo "<h2>Available Haikyuu-Themed Foods</h2>";
+
+foreach ($foods as $index => $food) {
+    echo "<p>Item " . ($index + 1) . ": $food</p>";
+}
+
+echo "<hr>";
+
+echo "<h2>Simulating Customer Orders</h2>";
+
+for ($i = 1; $i <= 5; $i++) {
+    echo "<div class='order-box'>";
+    echo "<h3>Customer $i Order:</h3>";
+
+    if ($i % 2 == 0) {
+        echo "<p>Even customer - Ordering in reverse menu order:</p>";
+        for ($j = count($foods) - 1; $j >= 0; $j--) {
+            echo "<p>Ordered: {$foods[$j]}</p>";
+        }
+    } else {
+        echo "<p>Odd customer - Ordering in normal menu order:</p>";
+        foreach ($foods as $food) {
+            echo "<p>Ordered: $food</p>";
+        }
+    }
+
+    echo "</div>";
+}
+
+echo "<hr>";
+
+echo "<h2>Food Descriptions</h2>";
+
+foreach ($foods as $food) {
+    if (str_contains($food, "Roll")) {
+        echo "<p>$food - Sweet and energetic, just like Hinata.</p>";
+    } elseif (str_contains($food, "Rice")) {
+        echo "<p>$food - Bitter and serious, like Kageyama.</p>";
+    } elseif (str_contains($food, "Tea")) {
+        echo "<p>$food - Sharp and salty, exactly like Tsukishima’s attitude.</p>";
+    } elseif (str_contains($food, "Ramen")) {
+        echo "<p>$food - Spicy and bold, just like Nishinoya.</p>";
+    } else {
+        echo "<p>$food - No description available.</p>";
+    }
+}
+
+echo "<hr>";
+
+if (file_exists("footer.php")) {
+    require "footer.php";
+}
 ?>
-<!DOCTYPE html>
-<html>
-    <head>
-        <link rel="stylesheet" href="css/styles.css">
-        </head>
-    <body>
-        <h1>Spike Eat-in</h1>
-        <h2>Receipt</h2>
-
-        <p><strong>Food Item:</strong> <?php echo $Food; ?></p>
-        <p><strong>Stock:</strong> <?php echo $stock; ?></p>
-        <p><strong>Purchased:</strong> <?php echo $purchased; ?></p>
-        
-        <p><strong>Shipped:</strong> <?php echo $buy ? "yes" : "no"; ?></p>
-
-        <hr>
-
-        <h2>Type Juggling Example</h2>
-        <p>1 + "2" = <?= $addString ?>(string converted to integer)</p>
-        <p>"Rolls" + 3 = <?= $addMixed ?>(string converted to integer)</p>
-        <p>"correct" = "<?= $concat ?>" (boolean true becomes "1")</p>
-
-    </body>
-</html>
